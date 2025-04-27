@@ -32,6 +32,24 @@ class Cadastro extends Component{
             uid: retorno.user.uid
           });
 
+          alert("Usuário cadastrado com sucesso!");
+
+          window.location.href = "./";
+
+        }).catch((error) => {
+          let mensagem = '';
+    
+          if (error.code === 'auth/invalid-email') {
+            mensagem = 'Email inválido!';
+          } else if (error.code === 'auth/weak-password') {
+            mensagem = 'Senha muito curta. A senha deve ter pelo menos 6 caracteres!';
+          } else if (error.code === 'auth/email-already-in-use') {
+            mensagem = 'Este email já está cadastrado!';
+          } else {
+            mensagem = 'Erro ao cadastrar usuário: ' + error.message;
+          }
+    
+          alert(mensagem);
         });
     }
 
@@ -40,7 +58,7 @@ class Cadastro extends Component{
         <div>
 
             <h1>Cadastro</h1>
-            <input type="text" placeholder='Email' onChange={(e) => this.setState({email: e.target.value})} />
+            <input type="text" placeholder='Email' onChange={(e) => this.setState({email: e.target.value})}  />
             <br/>
             <input type="password" placeholder='Senha' onChange={(e) => this.setState({senha: e.target.value})} />
             <br/>
